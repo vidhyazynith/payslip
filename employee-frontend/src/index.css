@@ -1,0 +1,478 @@
+/* index.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  line-height: 1.6;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  background-color: #2c3e50;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.app-header h1 {
+  font-size: 1.8rem;
+}
+
+.app-main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Buttons */
+.btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.btn-primary {
+  background-color: #3498db;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+}
+
+.btn-send {
+  background-color: #27ae60;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+}
+
+.btn-send:hover:not(:disabled) {
+  background-color: #219653;
+}
+
+.btn-send:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
+
+.btn-refresh {
+  background-color: #7f8c8d;
+  color: white;
+}
+
+.btn-refresh:hover {
+  background-color: #636e72;
+}
+
+/* Forms */
+.employee-form {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.employee-form h2 {
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+}
+
+.form-section {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.form-section h3 {
+  margin-bottom: 1rem;
+  color: #34495e;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  flex: 1;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.form-actions button {
+  padding: 0.75rem 1.5rem;
+}
+.form-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.add-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.remove-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.remove-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.form-row.with-actions {
+  display: flex;
+  align-items: flex-end;
+}
+
+/* Dashboard */
+.employee-dashboard {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.dashboard-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.search-input {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  min-width: 250px;
+}
+
+/* Employee List */
+.employee-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.employee-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.employee-card:hover {
+  border-color: #3498db;
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.1);
+}
+
+.employee-card.selected {
+  border-color: #3498db;
+  background-color: #f0f8ff;
+}
+
+.employee-basic h3 {
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.employee-id {
+  font-size: 0.9rem;
+  color: #7f8c8d;
+}
+
+.employee-pay {
+  text-align: right;
+}
+
+.net-pay {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #27ae60;
+}
+
+.pay-period {
+  font-size: 0.9rem;
+  color: #7f8c8d;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: #7f8c8d;
+  font-style: italic;
+}
+
+/* Employee Details */
+.employee-details-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.employee-details {
+  background: white;
+  border-radius: 8px;
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 10;
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #7f8c8d;
+}
+
+.details-content {
+  padding: 1.5rem;
+}
+
+.details-section {
+  margin-bottom: 2rem;
+}
+
+.details-section h3 {
+  margin-bottom: 1rem;
+  color: #2c3e50;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-item label {
+  font-weight: 500;
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.earnings-deductions {
+  border: 1px solid #eee;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.earnings-deductions .item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.earnings-deductions .item:last-child {
+  border-bottom: none;
+}
+
+.earnings-deductions .item.total {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.net-pay-display,
+.net-pay-words {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #e8f5e9;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+
+.net-pay-display .value {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #27ae60;
+}
+
+.details-section.highlight {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+
+/* Message */
+.message {
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 4px;
+  background-color: #e3f2fd;
+  color: #1976d2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.message button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #1976d2;
+}
+
+/* Send Payslips Section */
+.send-payslips-section {
+  margin-top: 2rem;
+  text-align: center;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.hint {
+  margin-top: 0.5rem;
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #7f8c8d;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .app-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .app-main {
+    padding: 1rem;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .dashboard-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+  
+  .dashboard-controls {
+    flex-direction: column;
+  }
+  
+  .search-input {
+    min-width: auto;
+  }
+  
+  .employee-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .employee-pay {
+    text-align: left;
+  }
+  
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+}
