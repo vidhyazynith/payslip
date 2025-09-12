@@ -16,7 +16,7 @@ const EmployeeUpdateForm = ({ employeeId, onEmployeeUpdated, onCancel }) => {
     earnings: [
       { type: 'Basic Pay', amount: 0 },
       { type: 'HRA', amount: 0 },
-      { type: 'Bonus', amount: 0 }
+      { type: 'Special Allowance', amount: 0 }
     ],
     deductions: [
       { type: 'Income Tax', amount: 0 },

@@ -8,7 +8,7 @@ const EmployeeForm = ({ onEmployeeAdded, onCancel }) => {
     email: '',
     designation: '',
     employeeId: '',
-    month: new Date().toISOString().slice(0, 7),
+    month: new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" }),
     paidDays: 0,
     lopDays: 0,
     remainingLeave: 0,
@@ -16,7 +16,7 @@ const EmployeeForm = ({ onEmployeeAdded, onCancel }) => {
     earnings: [
       { type: 'Basic Pay', amount: 0 },
       { type: 'HRA', amount: 0 },
-      { type: 'Bonus', amount: 0 }
+      { type: 'Special Allowance', amount: 0 }
     ],
     deductions: [
       { type: 'Income Tax', amount: 0 },
@@ -29,29 +29,61 @@ const EmployeeForm = ({ onEmployeeAdded, onCancel }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
+    
+    // setFormData(prev => ({
+    //   ...prev,
+    //   [name]: value
+    // }))
+
+    // 🔹 CHANGE 2: Format month properly before saving
+    if (name === "month") {
+      const [year, month] = value.split("-")
+  const formatted = new Date(Number(year), Number(month) , 1).toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric",
+      })
+      setFormData(prev => ({ ...prev, [name]: formatted }))
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }))
+    }
   }
 
   const handleEarningChange = (index, field, value) => {
     const updatedEarnings = [...formData.earnings]
     updatedEarnings[index][field] = field === 'amount' ? parseFloat(value) || 0 : value
-    setFormData(prev => ({
-      ...prev,
-      earnings: updatedEarnings
-    }))
-  }
 
-  const handleDeductionChange = (index, field, value) => {
-    const updatedDeductions = [...formData.deductions]
-    updatedDeductions[index][field] = field === 'amount' ? parseFloat(value) || 0 : value
+    // find the updated Basic Pay
+  const basicPay = updatedEarnings.find(e => e.type === "Basic Pay")?.amount || 0
+
+  // calculate PF (6% of Basic Pay)
+  const employeePF = parseFloat((basicPay * 0.12).toFixed(2))
+  const employerPF = parseFloat((basicPay * 0.12).toFixed(2))
+
+  const updatedDeductions = formData.deductions.map(d => {
+    if (d.type === "Employee PF contribution") return { ...d, amount: employeePF }
+    if (d.type === "Employer PF contribution") return { ...d, amount: employerPF }
+    return d
+  })
+
+
     setFormData(prev => ({
       ...prev,
+      earnings: updatedEarnings,
       deductions: updatedDeductions
     }))
   }
+
+  // const handleDeductionChange = (index, field, value) => {
+  //   const updatedDeductions = [...formData.deductions]
+  //   updatedDeductions[index][field] = field === 'amount' ? parseFloat(value) || 0 : value
+  //   setFormData(prev => ({
+  //     ...prev,
+  //     deductions: updatedDeductions
+  //   }))
+  // }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -66,7 +98,7 @@ const EmployeeForm = ({ onEmployeeAdded, onCancel }) => {
         email: '',
         designation: '',
         employeeId: '',
-        month: new Date().toISOString().slice(0, 7),
+        month: new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" }),
         paidDays: 0,
         lopDays: 0,
         remainingLeave: 0,
@@ -74,7 +106,7 @@ const EmployeeForm = ({ onEmployeeAdded, onCancel }) => {
         earnings: [
           { type: 'Basic Pay', amount: 0 },
           { type: 'HRA', amount: 0 },
-          { type: 'Bonus', amount: 0 }
+          { type: 'Special Allowance', amount: 0 }
         ],
         deductions: [
           { type: 'Income Tax', amount: 0 },
@@ -150,7 +182,7 @@ const EmployeeForm = ({ onEmployeeAdded, onCancel }) => {
               <input
                 type="month"
                 name="month"
-                value={formData.month}
+                value={new Date(formData.month).toISOString().slice(0, 7)}
                 onChange={handleChange}
               />
             </div>
@@ -251,6 +283,7 @@ const EmployeeForm = ({ onEmployeeAdded, onCancel }) => {
                   onChange={(e) => handleDeductionChange(index, 'amount', e.target.value)}
                   min="0"
                   step="0.01"
+                  readOnly={deduction.type.includes("PF")}
                 />
               </div>
             </div>
