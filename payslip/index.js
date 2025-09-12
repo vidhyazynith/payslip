@@ -58,8 +58,8 @@ const employeeSchema = new mongoose.Schema({
 
     this.grossEarnings = this.earnings.reduce((sum, e) => sum + e.amount, 0);
     this.totalDeductions = this.deductions.reduce((sum, d) => sum +d.amount, 0);
-    this.netPay = this.grossEarnings;
-    this.salary = this.grossEarnings - this.totalDeductions;
+    this.netPay = this.grossEarnings + this.totalDeductions;
+    this.salary = this.netPay - this.totalDeductions;
     if (this.salary < 0) {
         this.salary = 0;
     }
@@ -79,18 +79,18 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-function roundedRect(doc, x, y, width, height, radius) {
-  doc.moveTo(x + radius, y)
-    .lineTo(x + width - radius, y)
-    .quadraticCurveTo(x + width, y, x + width, y + radius)
-    .lineTo(x + width, y + height - radius)
-    .quadraticCurveTo(x + width, y + height, x + width - radius, y + height)
-    .lineTo(x + radius, y + height)
-    .quadraticCurveTo(x, y + height, x, y + height - radius)
-    .lineTo(x, y + radius)
-    .quadraticCurveTo(x, y, x + radius, y)
-    .closePath();
-}
+// function roundedRect(doc, x, y, width, height, radius) {
+//   doc.moveTo(x + radius, y)
+//     .lineTo(x + width - radius, y)
+//     .quadraticCurveTo(x + width, y, x + width, y + radius)
+//     .lineTo(x + width, y + height - radius)
+//     .quadraticCurveTo(x + width, y + height, x + width - radius, y + height)
+//     .lineTo(x + radius, y + height)
+//     .quadraticCurveTo(x, y + height, x, y + height - radius)
+//     .lineTo(x, y + radius)
+//     .quadraticCurveTo(x, y, x + radius, y)
+//     .closePath();
+// }
 
 
 // ================================
@@ -157,7 +157,7 @@ function generatePayslip(emp) {
         doc.text(emp.netPay.toFixed(2), boxX + 46, boxY + 15);
 
         doc.fontSize(11).fillColor("gray").font("Helvetica")
-        .text("Total Net Pay", boxX+15, boxY + 32);
+        .text("Total Gross pay", boxX+15, boxY + 32);
 
          // Paid Days / LOP Days
         doc.fontSize(11).fillColor("black").text("Paid Days :", boxX +20, boxY + 80);
@@ -287,18 +287,18 @@ function generatePayslip(emp) {
       width: boxWidth - 10
     });
 
-        const amountWords =numberToWords.toWords(emp.salary).replace(/\b\w/g, c =>c.toUpperCase());
-        doc.font("Helvetica-Bold").fontSize(10).fillColor("black").text(`${amountWords}Rupees Only`, 50, 530, { width: 380, align: "center" });
-        doc.moveTo(50, 550).lineTo(550, 550).strokeColor("#ccc").stroke();
+    const amountWords =numberToWords.toWords(emp.salary).replace(/\b\w/g, c =>c.toUpperCase());
+    doc.font("Helvetica-Bold").fontSize(10).fillColor("black").text(`${amountWords}Rupees Only`, 50, 530, { width: 380, align: "center" });
+    doc.moveTo(50, 550).lineTo(550, 550).strokeColor("#ccc").stroke();
 
 
         //-------------------------------------------------------------------
 
 
-        doc.end();
+    doc.end();
 
-        stream.on("finish", () => resolve(filePath));
-        stream.on("error", reject);
+    stream.on("finish", () => resolve(filePath));
+    stream.on("error", reject);
     });
 }
 
