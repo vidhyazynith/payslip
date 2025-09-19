@@ -11,16 +11,19 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const numberToWords = require("number-to-words");
 const cors = require("cors");
+const dotenv = require("dotenv");
 
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
+dotenv.config();
+
 
 // ================================
 // MongoDB connection
 // ================================
-mongoose.connect("mongodb://127.0.0.1:27017/employees", {
+mongoose.connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
